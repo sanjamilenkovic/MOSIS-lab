@@ -9,6 +9,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show()
 
         var dugme: Button = findViewById<Button>(R.id.finish_button)
         dugme.setOnClickListener {
