@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Hello world</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="new_button">New button</string>
+    <string name="finish">Finish!</string>
+    <string name="play_with_the_lifecycle">Play with the lifecycle!</string>
+</resources>
