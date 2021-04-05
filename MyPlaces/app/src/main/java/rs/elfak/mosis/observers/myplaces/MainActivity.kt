@@ -6,6 +6,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,10 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -30,9 +28,17 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+
+        when (item.itemId) {
+            R.id.show_map_item -> Toast.makeText(this, "Show Map!", Toast.LENGTH_SHORT).show()
+            R.id.my_places_list_item -> Toast.makeText(this, "My Places!", Toast.LENGTH_SHORT)
+                .show()
+            R.id.new_place_item -> Toast.makeText(this, "New Place!", Toast.LENGTH_SHORT).show()
+            R.id.about_item -> Toast.makeText(this, "About!", Toast.LENGTH_SHORT).show()
+
         }
+
+        return super.onOptionsItemSelected(item)
     }
+
 }

@@ -3,8 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="rs.elfak.mosis.observers.myplaces.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/show_map_item"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/show_map"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/new_place_item"
+        android:orderInCategory="100"
+        android:title="@string/new_place"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/my_places_list_item"
+        android:orderInCategory="100"
+        android:title="@string/my_places_list"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about_item"
+        android:orderInCategory="100"
+        android:title="@string/about"
         app:showAsAction="never" />
 </menu>
