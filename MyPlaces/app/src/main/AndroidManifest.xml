@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPlaces">
         <activity
+            android:name=".MyPlacesList"
+            android:label="@string/title_activity_my_places_list"
+            android:theme="@style/Theme.MyPlaces.NoActionBar"></activity>
+        <activity
             android:name=".About"
             android:label="About"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
