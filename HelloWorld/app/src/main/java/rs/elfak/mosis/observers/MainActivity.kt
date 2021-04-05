@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "onResume1", Toast.LENGTH_SHORT).show()
     }
 
     override fun onStart() {
