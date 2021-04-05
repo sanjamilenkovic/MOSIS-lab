@@ -1,5 +1,6 @@
 package rs.elfak.mosis.observers.myplaces
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -33,7 +34,11 @@ class MainActivity : AppCompatActivity() {
             R.id.my_places_list_item -> Toast.makeText(this, "My Places!", Toast.LENGTH_SHORT)
                 .show()
             R.id.new_place_item -> Toast.makeText(this, "New Place!", Toast.LENGTH_SHORT).show()
-            R.id.about_item -> Toast.makeText(this, "About!", Toast.LENGTH_SHORT).show()
+            R.id.about_item -> {
+                Toast.makeText(this, "About!", Toast.LENGTH_SHORT).show()
+                var intent = Intent(this, About::class.java)
+                startActivity(intent)
+            }
 
         }
 
