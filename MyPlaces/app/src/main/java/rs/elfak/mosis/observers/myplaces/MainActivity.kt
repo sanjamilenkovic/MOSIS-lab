@@ -1,5 +1,6 @@
 package rs.elfak.mosis.observers.myplaces
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -8,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import rs.elfak.mosis.observers.myplaces.activity.EditMyPlaceActivity
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +39,10 @@ class MainActivity : AppCompatActivity() {
                 var intent = Intent(this, MyPlacesList::class.java)
                 startActivity(intent)
             }
-            R.id.new_place_item -> Toast.makeText(this, "New Place!", Toast.LENGTH_SHORT).show()
+            R.id.new_place_item ->  {
+                var intent = Intent(this, EditMyPlaceActivity::class.java)
+                startActivityForResult(intent, NEW_PLACE)
+            }
             R.id.about_item -> {
                 Toast.makeText(this, "About!", Toast.LENGTH_SHORT).show()
                 var intent = Intent(this, About::class.java)
@@ -48,4 +54,11 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK)
+            Toast.makeText(this, "New Place added!", Toast.LENGTH_SHORT).show()
+    }
+    companion object { var NEW_PLACE = 1 }
 }
+
