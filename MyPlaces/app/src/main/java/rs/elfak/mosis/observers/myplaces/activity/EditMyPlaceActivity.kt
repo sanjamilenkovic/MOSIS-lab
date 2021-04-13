@@ -1,5 +1,6 @@
 package rs.elfak.mosis.observers.myplaces.activity
 
+import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -10,21 +11,35 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import rs.elfak.mosis.observers.myplaces.About
-import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import rs.elfak.mosis.observers.myplaces.R
 import rs.elfak.mosis.observers.myplaces.data.MyPlace
 import rs.elfak.mosis.observers.myplaces.data.MyPlacesData
+import java.lang.Exception
 
 class EditMyPlaceActivity : AppCompatActivity() {
+    var editMode: Boolean = true
+    var position: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_my_place)
+
+        try {
+            var listIntent: Intent = intent
+            var positionBundle: Bundle? = listIntent.extras
+            if (positionBundle != null) {
+                position = positionBundle.getInt("position")
+            } else {
+                editMode = false
+            }
+
+
+        } catch (e: Exception) {
+            editMode = false
+        }
+
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -35,9 +50,24 @@ class EditMyPlaceActivity : AppCompatActivity() {
 
         var nameEdit = findViewById<EditText>(R.id.editName)
 
+        if (!editMode)
+        {
+            finishedButton.isEnabled = false
+            finishedButton.setText("ADD")
+        }
+        else if (position >=0) {
+            finishedButton.setText("SAVE")
+            var place :MyPlace  = MyPlacesData.getInstance().getPlace(position)
+            nameEdit.setText(place.name)
+            var descEditText = findViewById<EditText>(R.id.descriptionEditText)
+            descEditText.setText(place.description)
+
+        }
+
+
         nameEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                finishedButton.isEnabled=true
+                finishedButton.isEnabled = true
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -49,11 +79,22 @@ class EditMyPlaceActivity : AppCompatActivity() {
 
         finishedButton.setOnClickListener {
 
-            var nameEditText = findViewById<EditText>(R.id.editName).text.toString()
-            var descriptionEditText = findViewById<EditText>(R.id.descriptionEditText).text.toString()
 
-            var newPlace = MyPlace(nameEditText, descriptionEditText)
-            MyPlacesData.getInstance().addNewPlace(newPlace)
+            var nameEditText = findViewById<EditText>(R.id.editName).text.toString()
+            var descriptionEditText =
+                findViewById<EditText>(R.id.descriptionEditText).text.toString()
+
+            if (!editMode)
+            {
+                var newPlace = MyPlace(nameEditText, descriptionEditText)
+                MyPlacesData.getInstance().addNewPlace(newPlace)
+
+            }
+            else {
+                var place = MyPlacesData.getInstance().getPlace(position)
+                place.name = nameEditText
+                place.description = descriptionEditText
+            }
             setResult(Activity.RESULT_OK)
             finish()
         }

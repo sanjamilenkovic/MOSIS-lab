@@ -1,5 +1,6 @@
 package rs.elfak.mosis.observers.myplaces.activity
 
+import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -7,11 +8,8 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import rs.elfak.mosis.observers.myplaces.About
-import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import rs.elfak.mosis.observers.myplaces.R
 import rs.elfak.mosis.observers.myplaces.data.MyPlacesData
 import java.lang.Exception

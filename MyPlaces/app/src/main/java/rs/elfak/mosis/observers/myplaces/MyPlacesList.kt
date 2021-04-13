@@ -1,16 +1,17 @@
 package rs.elfak.mosis.observers.myplaces
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import rs.elfak.mosis.observers.myplaces.MainActivity.Companion.NEW_PLACE
+import rs.elfak.mosis.observers.myplaces.activity.MainActivity.Companion.NEW_PLACE
 import rs.elfak.mosis.observers.myplaces.activity.EditMyPlaceActivity
 import rs.elfak.mosis.observers.myplaces.activity.ViewMyPlaceActivity
 import rs.elfak.mosis.observers.myplaces.data.MyPlace
@@ -25,19 +26,60 @@ class MyPlacesList : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val listView = findViewById<ListView>(R.id.my_place_list)
+        var fab = findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener {
+            var i = Intent(this, EditMyPlaceActivity::class.java)
+            startActivityForResult(i, NEW_PLACE)
+        }
 
-        listView.adapter = ArrayAdapter<MyPlace>(this, android.R.layout.simple_list_item_1, MyPlacesData.getInstance().getMyPlaces())
-        listView.setOnItemClickListener { parent, view, position, id ->
-            var place : MyPlace = parent.adapter.getItem(position) as MyPlace
-            Toast.makeText(this, place.name.toString()+ " selected ", Toast.LENGTH_SHORT).show()
 
-            var positionBundle : Bundle = Bundle()
+        val myPlaceList = findViewById<ListView>(R.id.my_place_list)
+
+        myPlaceList.adapter = ArrayAdapter<MyPlace>(
+            this,
+            android.R.layout.simple_list_item_1,
+            MyPlacesData.getInstance().getMyPlaces()
+        )
+        myPlaceList.setOnItemClickListener { parent, view, position, id ->
+            var place: MyPlace = parent.adapter.getItem(position) as MyPlace
+            Toast.makeText(this, place.name.toString() + " selected ", Toast.LENGTH_SHORT).show()
+
+            var positionBundle: Bundle = Bundle()
             positionBundle.putInt("position", position)
             var intent = Intent(this, ViewMyPlaceActivity::class.java)
             intent.putExtras(positionBundle)
             startActivity(intent)
         }
+        myPlaceList.setOnCreateContextMenuListener { menu, v, menuInfo ->
+            var info: AdapterView.AdapterContextMenuInfo =
+                menuInfo as AdapterView.AdapterContextMenuInfo
+            var place: MyPlace = MyPlacesData.getInstance().getPlace(info.position)
+            menu.setHeaderTitle(place.name)
+            menu.add(0, 1, 1, "View place")
+            menu.add(0, 2, 2, "Edit place")
+
+        }
+
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        var info: AdapterView.AdapterContextMenuInfo =
+            item.menuInfo as AdapterView.AdapterContextMenuInfo
+        var positionBundle: Bundle = Bundle()
+        positionBundle.putInt("position", info.position)
+        var i: Intent? = null
+
+        if (item.itemId == 1) {
+            i = Intent(this, ViewMyPlaceActivity::class.java)
+            i.putExtras(positionBundle)
+            startActivity(i)
+        } else if (item.itemId == 2) {
+            i = Intent(this, EditMyPlaceActivity::class.java)
+            i.putExtras(positionBundle)
+            startActivityForResult(i, 1)
+        }
+
+        return super.onContextItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,8 +114,12 @@ class MyPlacesList : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var myPlacesList : ListView = findViewById(R.id.my_place_list)
-        myPlacesList.adapter = ArrayAdapter<MyPlace>(this, android.R.layout.simple_list_item_1, MyPlacesData.getInstance().getMyPlaces())
+        var myPlacesList: ListView = findViewById(R.id.my_place_list)
+        myPlacesList.adapter = ArrayAdapter<MyPlace>(
+            this,
+            android.R.layout.simple_list_item_1,
+            MyPlacesData.getInstance().getMyPlaces()
+        )
 
     }
 }
