@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="rs.elfak.mosis.observers.myplaces.MainActivity">
+    tools:context="rs.elfak.mosis.observers.myplaces.activity.MainActivity">
     <item
         android:id="@+id/show_map_item"
         android:icon="@drawable/ic_action_map"

@@ -10,15 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPlaces">
         <activity
+            android:name=".activity.ViewMyPlaceActivity"
+            android:label="@string/title_activity_view_my_place"
+            android:theme="@style/Theme.MyPlaces.NoActionBar"></activity>
+        <activity
+            android:name=".activity.EditMyPlaceActivity"
+            android:label="@string/title_activity_edit_my_place"
+            android:theme="@style/Theme.MyPlaces.NoActionBar" />
+        <activity
             android:name=".MyPlacesList"
             android:label="@string/title_activity_my_places_list"
-            android:theme="@style/Theme.MyPlaces.NoActionBar"></activity>
+            android:theme="@style/Theme.MyPlaces.NoActionBar" />
         <activity
             android:name=".About"
             android:label="About"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

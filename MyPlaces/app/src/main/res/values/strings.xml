@@ -18,4 +18,12 @@
    It will be able to show your places on map and enable you to share them with your friends. Each week this application will be better and better
     and you will earn <i>points</i> from your teaching assistant.</string>
     <string name="title_activity_my_places_list">MyPlacesList</string>
+    <string name="title_activity_edit_my_place">EditMyPlaceActivity</string>
+    <string name="edit_name">Edit name</string>
+    <string name="description">Description</string>
+    <string name="cancel">CANCEL</string>
+    <string name="title_activity_view_my_place">ViewMyPlaceActivity</string>
+    <string name="ok">OK</string>
+    <string name="name">Name:</string>
+    <string name="description2">Description:</string>
 </resources>
