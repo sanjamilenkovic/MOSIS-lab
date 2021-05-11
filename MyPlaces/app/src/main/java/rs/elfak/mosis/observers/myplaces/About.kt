@@ -12,5 +12,7 @@ class About : AppCompatActivity() {
         ok.setOnClickListener {
             finish()
         }
+
+        //komentar
     }
 }
