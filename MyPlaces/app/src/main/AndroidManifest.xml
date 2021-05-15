@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPlaces">
         <activity
+            android:name=".activity.MyPlacesMapsActivity"
+            android:label="@string/title_activity_my_places_maps"
+            android:theme="@style/Theme.MyPlaces.NoActionBar"></activity>
+        <activity
             android:name=".activity.ViewMyPlaceActivity"
             android:label="@string/title_activity_view_my_place"
-            android:theme="@style/Theme.MyPlaces.NoActionBar"></activity>
+            android:theme="@style/Theme.MyPlaces.NoActionBar" />
         <activity
             android:name=".activity.EditMyPlaceActivity"
             android:label="@string/title_activity_edit_my_place"

@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
+    
     <TextView
         android:id="@+id/nameText"
         android:layout_width="match_parent"
