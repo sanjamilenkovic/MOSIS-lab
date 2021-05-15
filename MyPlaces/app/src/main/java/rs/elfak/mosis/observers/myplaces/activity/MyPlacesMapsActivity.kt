@@ -28,8 +28,8 @@ class MyPlacesMapsActivity : AppCompatActivity() {
     lateinit var map: MapView
     lateinit var mapController: IMapController
 
-    var NEW_PLACE: Int = 1
-    var PERMISSION_ACCESS_FINE_LOCATION: Int = 1
+    private var NEW_PLACE: Int = 1
+    private var PERMISSION_ACCESS_FINE_LOCATION: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +37,10 @@ class MyPlacesMapsActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            var i = Intent(this, EditMyPlaceActivity::class.java)
-            startActivityForResult(i, NEW_PLACE);
+            val i = Intent(this, EditMyPlaceActivity::class.java)
+            startActivityForResult(i, NEW_PLACE)
         }
-        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         map = findViewById(R.id.map)
@@ -67,7 +67,7 @@ class MyPlacesMapsActivity : AppCompatActivity() {
 
         mapController = map.controller
         mapController.setZoom(15.0)
-        var startPoint = GeoPoint(43.3209, 21.8958)
+        val startPoint = GeoPoint(43.3209, 21.8958)
         mapController.setCenter(startPoint)
 
     }
@@ -91,18 +91,14 @@ class MyPlacesMapsActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.new_place_item -> {
-                var intent = Intent(this, EditMyPlaceActivity::class.java)
+                val intent = Intent(this, EditMyPlaceActivity::class.java)
                 startActivityForResult(intent, 1)
             }
             R.id.about_item -> {
-                var intent = Intent(this, About::class.java)
+                val intent = Intent(this, About::class.java)
                 startActivity(intent)
             }
-            R.id.about_item -> {
-                Toast.makeText(this, "About!", Toast.LENGTH_SHORT).show()
-                var intent = Intent(this, About::class.java)
-                startActivity(intent)
-            }
+
             android.R.id.home -> finish()
 
 
@@ -111,8 +107,8 @@ class MyPlacesMapsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun setMyLocationOverlay() {
-        var myLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(this), map)
+    private fun setMyLocationOverlay() {
+        val myLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(this), map)
         myLocationOverlay.enableMyLocation()
         map.overlays.add(myLocationOverlay)
     }
@@ -128,17 +124,18 @@ class MyPlacesMapsActivity : AppCompatActivity() {
             PERMISSION_ACCESS_FINE_LOCATION -> {
                 if (grantResults.size != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     setMyLocationOverlay()
+                setOnMapClickOverlay()
             }
         }
     }
 
-    fun setOnMapClickOverlay()
+    private fun setOnMapClickOverlay()
     {
-        var mReceive: MapEventsReceiver = object : MapEventsReceiver {
+        val mReceive: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
-                var lon : String = p.longitude.toString()
-                var lat : String = p.latitude.toString()
-                var locationIntent = Intent()
+                val lon : String = p.longitude.toString()
+                val lat : String = p.latitude.toString()
+                val locationIntent = Intent()
                 locationIntent.putExtra("lon", lon)
                 locationIntent.putExtra("lat", lat)
                 setResult(Activity.RESULT_OK, locationIntent)
@@ -151,7 +148,7 @@ class MyPlacesMapsActivity : AppCompatActivity() {
             }
         }
 
-        var overlaysEvent =  MapEventsOverlay(mReceive)
+        val overlaysEvent =  MapEventsOverlay(mReceive)
         map.overlays.add(overlaysEvent)
 
 
