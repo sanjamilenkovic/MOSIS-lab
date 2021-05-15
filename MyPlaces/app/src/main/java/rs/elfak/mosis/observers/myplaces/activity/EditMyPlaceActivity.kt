@@ -44,24 +44,32 @@ class EditMyPlaceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+
+
         var finishedButton = findViewById<Button>(R.id.editMyPlaceFinishedButton)
         finishedButton.text = "ADD"
         finishedButton.isEnabled = false
 
         var nameEdit = findViewById<EditText>(R.id.editName)
 
-        if (!editMode)
-        {
+        if (!editMode) {
             finishedButton.isEnabled = false
             finishedButton.setText("ADD")
-        }
-        else if (position >=0) {
+        } else if (position >= 0) {
             finishedButton.setText("SAVE")
-            var place :MyPlace  = MyPlacesData.getInstance().getPlace(position)
+            var place: MyPlace = MyPlacesData.getInstance().getPlace(position)
             nameEdit.setText(place.name)
             var descEditText = findViewById<EditText>(R.id.descriptionEditText)
             descEditText.setText(place.description)
 
+        }
+
+        var getLocationButton = findViewById<Button>(R.id.getLocationButton)
+
+        getLocationButton.setOnClickListener {
+            Toast.makeText(this, "pribavljam lokaciju", Toast.LENGTH_SHORT).show()
+            var i = Intent(this, MyPlacesMapsActivity::class.java)
+            startActivityForResult(i, 1)
         }
 
 
@@ -83,17 +91,21 @@ class EditMyPlaceActivity : AppCompatActivity() {
             var nameEditText = findViewById<EditText>(R.id.editName).text.toString()
             var descriptionEditText =
                 findViewById<EditText>(R.id.descriptionEditText).text.toString()
+            var latitudeEditText = findViewById<EditText>(R.id.editLatitude).text.toString()
+            var longitudeEditText = findViewById<EditText>(R.id.editLongitude).text.toString()
 
-            if (!editMode)
-            {
+            if (!editMode) {
                 var newPlace = MyPlace(nameEditText, descriptionEditText)
+                newPlace.latitude = latitudeEditText
+                newPlace.longitude = longitudeEditText
                 MyPlacesData.getInstance().addNewPlace(newPlace)
 
-            }
-            else {
+            } else {
                 var place = MyPlacesData.getInstance().getPlace(position)
                 place.name = nameEditText
                 place.description = descriptionEditText
+                place.latitude = latitudeEditText
+                place.longitude = longitudeEditText
             }
             setResult(Activity.RESULT_OK)
             finish()
@@ -134,5 +146,24 @@ class EditMyPlaceActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        try {
+            if (resultCode == Activity.RESULT_OK) {
+                var lon = data?.extras?.getString("lon")
+                var lonText = findViewById<EditText>(R.id.editLongitude)
+                lonText.setText(lon)
+
+                var lat = data?.extras?.getString("lat")
+                var latText = findViewById<EditText>(R.id.editLatitude)
+                latText.setText(lat)
+            }
+        }
+        catch (e : Exception)
+        {
+
+        }
     }
 }

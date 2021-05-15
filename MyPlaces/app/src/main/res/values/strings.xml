@@ -27,4 +27,7 @@
     <string name="name">Name:</string>
     <string name="description2">Description:</string>
     <string name="title_activity_my_places_maps">MyPlacesMapsActivity</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="get_location">GET LOCATION</string>
 </resources>
