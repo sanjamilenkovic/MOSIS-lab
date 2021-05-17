@@ -1,6 +1,5 @@
 package rs.elfak.mosis.observers.myplaces.activity
 
-import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import rs.elfak.mosis.observers.myplaces.About
 import rs.elfak.mosis.observers.myplaces.R
 import rs.elfak.mosis.observers.myplaces.data.MyPlace
 import rs.elfak.mosis.observers.myplaces.data.MyPlacesData
@@ -67,8 +65,10 @@ class EditMyPlaceActivity : AppCompatActivity() {
         var getLocationButton = findViewById<Button>(R.id.getLocationButton)
 
         getLocationButton.setOnClickListener {
-            Toast.makeText(this, "pribavljam lokaciju", Toast.LENGTH_SHORT).show()
+
             var i = Intent(this, MyPlacesMapsActivity::class.java)
+            i.putExtra("state", MyPlacesMapsActivity.SELECT_COORDINATES)
+
             startActivityForResult(i, 1)
         }
 
@@ -130,7 +130,12 @@ class EditMyPlaceActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         when (item.itemId) {
-            R.id.show_map_item -> Toast.makeText(this, "Show Map!", Toast.LENGTH_SHORT).show()
+            R.id.show_map_item -> {
+                var i = Intent(this, MyPlacesMapsActivity::class.java)
+                i.putExtra("state", MyPlacesMapsActivity.SELECT_COORDINATES)
+                Toast.makeText(this, "KOORDINATE", Toast.LENGTH_SHORT).show()
+                startActivity(i)
+            }
             R.id.my_places_list_item -> {
                 var intent = Intent(this, MyPlacesList::class.java)
                 startActivity(intent)

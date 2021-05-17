@@ -1,8 +1,9 @@
-package rs.elfak.mosis.observers.myplaces
+package rs.elfak.mosis.observers.myplaces.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import rs.elfak.mosis.observers.myplaces.R
 
 class About : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

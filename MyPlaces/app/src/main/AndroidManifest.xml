@@ -28,11 +28,11 @@
             android:label="@string/title_activity_edit_my_place"
             android:theme="@style/Theme.MyPlaces.NoActionBar" />
         <activity
-            android:name=".MyPlacesList"
+            android:name=".activity.MyPlacesList"
             android:label="@string/title_activity_my_places_list"
             android:theme="@style/Theme.MyPlaces.NoActionBar" />
         <activity
-            android:name=".About"
+            android:name=".activity.About"
             android:label="About"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity

@@ -5,8 +5,8 @@ data class MyPlace (
      var description : String
 )
 {
-    lateinit var longitude : String
-    lateinit var latitude : String
+    var longitude : String = ""
+    var latitude : String = ""
     var id : Int = 0
     override fun toString(): String {
         return name

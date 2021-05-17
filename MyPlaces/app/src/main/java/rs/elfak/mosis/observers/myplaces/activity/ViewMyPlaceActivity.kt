@@ -1,6 +1,5 @@
 package rs.elfak.mosis.observers.myplaces.activity
 
-import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -9,7 +8,6 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import rs.elfak.mosis.observers.myplaces.About
 import rs.elfak.mosis.observers.myplaces.R
 import rs.elfak.mosis.observers.myplaces.data.MyPlacesData
 import java.lang.Exception
@@ -43,6 +41,12 @@ class ViewMyPlaceActivity : AppCompatActivity() {
 
             var twDesc = findViewById<TextView>(R.id.descText)
             twDesc.setText(place.description)
+
+            var twLat = findViewById<TextView>(R.id.latText)
+            twLat.setText(place.latitude)
+
+            var twLon = findViewById<TextView>(R.id.lonText)
+            twLon.setText(place.longitude)
         }
 
         var okButton = findViewById<Button>(R.id.button_ok)
@@ -62,7 +66,12 @@ class ViewMyPlaceActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         when (item.itemId) {
-            R.id.show_map_item -> Toast.makeText(this, "Show Map!", Toast.LENGTH_SHORT).show()
+            R.id.show_map_item -> {
+                var i = Intent(this, MyPlacesMapsActivity::class.java)
+                i.putExtra("state", MyPlacesMapsActivity.SHOW_MAP)
+
+                startActivity(i)
+            }
             R.id.my_places_list_item -> {
                 var intent = Intent(this, MyPlacesList::class.java)
                 startActivity(intent)

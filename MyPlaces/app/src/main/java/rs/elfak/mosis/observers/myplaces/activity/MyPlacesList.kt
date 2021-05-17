@@ -1,4 +1,4 @@
-package rs.elfak.mosis.observers.myplaces
+package rs.elfak.mosis.observers.myplaces.activity
 
 
 import android.content.Intent
@@ -11,9 +11,8 @@ import android.widget.ListView
 import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
+import rs.elfak.mosis.observers.myplaces.R
 import rs.elfak.mosis.observers.myplaces.activity.MainActivity.Companion.NEW_PLACE
-import rs.elfak.mosis.observers.myplaces.activity.EditMyPlaceActivity
-import rs.elfak.mosis.observers.myplaces.activity.ViewMyPlaceActivity
 import rs.elfak.mosis.observers.myplaces.data.MyPlace
 import rs.elfak.mosis.observers.myplaces.data.MyPlacesData
 

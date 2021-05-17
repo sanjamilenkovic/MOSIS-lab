@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import rs.elfak.mosis.observers.myplaces.About
-import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import rs.elfak.mosis.observers.myplaces.R
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             R.id.show_map_item -> {
                 Toast.makeText(this, "Show Map!", Toast.LENGTH_SHORT).show()
                 var i = Intent(this, MyPlacesMapsActivity::class.java)
+                i.putExtra("state", MyPlacesMapsActivity.SHOW_MAP)
                 startActivity(i)
             }
             R.id.my_places_list_item -> {
