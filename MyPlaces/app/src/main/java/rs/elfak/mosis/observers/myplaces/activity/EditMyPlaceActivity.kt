@@ -69,7 +69,7 @@ class EditMyPlaceActivity : AppCompatActivity() {
             var i = Intent(this, MyPlacesMapsActivity::class.java)
             i.putExtra("state", MyPlacesMapsActivity.SELECT_COORDINATES)
 
-            startActivityForResult(i, 1)
+            startActivityForResult(i, 2)
         }
 
 
@@ -95,17 +95,15 @@ class EditMyPlaceActivity : AppCompatActivity() {
             var longitudeEditText = findViewById<EditText>(R.id.editLongitude).text.toString()
 
             if (!editMode) {
-                var newPlace = MyPlace(nameEditText, descriptionEditText)
+                var newPlace = MyPlace()
+                newPlace.description = descriptionEditText
+                newPlace.name = nameEditText
                 newPlace.latitude = latitudeEditText
                 newPlace.longitude = longitudeEditText
                 MyPlacesData.getInstance().addNewPlace(newPlace)
 
             } else {
-                var place = MyPlacesData.getInstance().getPlace(position)
-                place.name = nameEditText
-                place.description = descriptionEditText
-                place.latitude = latitudeEditText
-                place.longitude = longitudeEditText
+                MyPlacesData.getInstance().updatePlace(position,nameEditText,descriptionEditText,longitudeEditText,latitudeEditText)
             }
             setResult(Activity.RESULT_OK)
             finish()

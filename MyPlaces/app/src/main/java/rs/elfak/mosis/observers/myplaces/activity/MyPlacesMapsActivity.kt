@@ -21,8 +21,8 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.MapEventsOverlay
-import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.*
+import org.osmdroid.views.overlay.ItemizedIconOverlay.OnItemGestureListener
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import rs.elfak.mosis.observers.myplaces.R
@@ -32,6 +32,7 @@ import java.util.*
 
 class MyPlacesMapsActivity : AppCompatActivity() {
 
+      var myPlacesOverlay: ItemizedIconOverlay<OverlayItem>? = null
     lateinit var map: MapView
     lateinit var mapController: IMapController
 
@@ -116,6 +117,7 @@ class MyPlacesMapsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
         map.onResume()
     }
 
@@ -196,7 +198,43 @@ class MyPlacesMapsActivity : AppCompatActivity() {
         myLocationOverlay.setPersonIcon(currentIcon)
 
     }
+    fun showMyPlaces(){
+        Toast.makeText(this, "showMyPlaces", Toast.LENGTH_SHORT).show()
+        if(myPlacesOverlay !=null)
+        {
+            this.map.overlays.remove(myPlacesOverlay)
+        }
+        val items : ArrayList<OverlayItem> = ArrayList<OverlayItem>()
+        for(place in MyPlacesData.getInstance().getMyPlaces())
+        {
+            if(place.latitude !="") {
+                val item: OverlayItem = OverlayItem(
+                    place.name,
+                    place.description,
+                    GeoPoint((place.latitude).toDouble(), (place.longitude).toDouble())
+                )
+                item.setMarker(ResourcesCompat.getDrawable(resources, R.drawable.pin, null))
+                items.add(item);
+                Toast.makeText(this, "asdasd", Toast.LENGTH_SHORT).show()
+            }
+        }
+        myPlacesOverlay = ItemizedIconOverlay<OverlayItem>(items,object:  OnItemGestureListener<OverlayItem>{
+            override fun onItemLongPress(index: Int, item: OverlayItem?): Boolean {
+            val intent  = Intent(applicationContext,ViewMyPlaceActivity::class.java);
+            intent.putExtra("position",index)
+                startActivity(intent)
+                return true
+            }
 
+            override fun onItemSingleTapUp(index: Int, item: OverlayItem?): Boolean {
+           val intent : Intent = Intent (applicationContext,EditMyPlaceActivity::class.java)
+                intent.putExtra("position",index)
+                startActivityForResult(intent,1)
+                return true
+            }
+        },this)
+        this.map.overlays.add(myPlacesOverlay)
+    }
     fun setCenterPlaceOnMap() {
         mapController = map.controller
 
@@ -206,6 +244,7 @@ class MyPlacesMapsActivity : AppCompatActivity() {
     }
 
     fun setupMap() {
+        Toast.makeText(this, "setupMap", Toast.LENGTH_SHORT).show()
         when (state) {
             SHOW_MAP -> {
                 setMyLocationOverlay()
@@ -224,6 +263,7 @@ class MyPlacesMapsActivity : AppCompatActivity() {
 
             else -> setCenterPlaceOnMap()
         }
+        showMyPlaces()
     }
 
     private fun setOnMapClickOverlay() {
@@ -259,10 +299,13 @@ class MyPlacesMapsActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        Toast.makeText(this, "permission!", Toast.LENGTH_SHORT).show()
+
         when (requestCode) {
             PERMISSION_ACCESS_FINE_LOCATION -> {
-                if (grantResults.size != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     setMyLocationOverlay()
+
                 setupMap()
             }
         }

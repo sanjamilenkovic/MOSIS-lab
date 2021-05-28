@@ -1,13 +1,19 @@
 package rs.elfak.mosis.observers.myplaces.data
 
-data class MyPlace (
-     var name : String,
-     var description : String
+import com.google.firebase.database.Exclude
+import com.google.firebase.database.IgnoreExtraProperties
+
+@IgnoreExtraProperties
+ class MyPlace (
+
 )
 {
+    var name : String =""
+    var description : String= ""
     var longitude : String = ""
     var latitude : String = ""
-    var id : Int = 0
+    @Exclude
+    var key:String="";
     override fun toString(): String {
         return name
     }
