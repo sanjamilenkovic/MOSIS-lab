@@ -1,6 +1,5 @@
 package rs.elfak.mosis.observers.myplaces.activity
 
-import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import rs.elfak.mosis.observers.myplaces.About
 import rs.elfak.mosis.observers.myplaces.R
 import rs.elfak.mosis.observers.myplaces.data.MyPlace
 import rs.elfak.mosis.observers.myplaces.data.MyPlacesData
@@ -44,24 +42,34 @@ class EditMyPlaceActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+
+
         var finishedButton = findViewById<Button>(R.id.editMyPlaceFinishedButton)
         finishedButton.text = "ADD"
         finishedButton.isEnabled = false
 
         var nameEdit = findViewById<EditText>(R.id.editName)
 
-        if (!editMode)
-        {
+        if (!editMode) {
             finishedButton.isEnabled = false
             finishedButton.setText("ADD")
-        }
-        else if (position >=0) {
+        } else if (position >= 0) {
             finishedButton.setText("SAVE")
-            var place :MyPlace  = MyPlacesData.getInstance().getPlace(position)
+            var place: MyPlace = MyPlacesData.getInstance().getPlace(position)
             nameEdit.setText(place.name)
             var descEditText = findViewById<EditText>(R.id.descriptionEditText)
             descEditText.setText(place.description)
 
+        }
+
+        var getLocationButton = findViewById<Button>(R.id.getLocationButton)
+
+        getLocationButton.setOnClickListener {
+
+            var i = Intent(this, MyPlacesMapsActivity::class.java)
+            i.putExtra("state", MyPlacesMapsActivity.SELECT_COORDINATES)
+
+            startActivityForResult(i, 2)
         }
 
 
@@ -83,17 +91,19 @@ class EditMyPlaceActivity : AppCompatActivity() {
             var nameEditText = findViewById<EditText>(R.id.editName).text.toString()
             var descriptionEditText =
                 findViewById<EditText>(R.id.descriptionEditText).text.toString()
+            var latitudeEditText = findViewById<EditText>(R.id.editLatitude).text.toString()
+            var longitudeEditText = findViewById<EditText>(R.id.editLongitude).text.toString()
 
-            if (!editMode)
-            {
-                var newPlace = MyPlace(nameEditText, descriptionEditText)
+            if (!editMode) {
+                var newPlace = MyPlace()
+                newPlace.description = descriptionEditText
+                newPlace.name = nameEditText
+                newPlace.latitude = latitudeEditText
+                newPlace.longitude = longitudeEditText
                 MyPlacesData.getInstance().addNewPlace(newPlace)
 
-            }
-            else {
-                var place = MyPlacesData.getInstance().getPlace(position)
-                place.name = nameEditText
-                place.description = descriptionEditText
+            } else {
+                MyPlacesData.getInstance().updatePlace(position,nameEditText,descriptionEditText,longitudeEditText,latitudeEditText)
             }
             setResult(Activity.RESULT_OK)
             finish()
@@ -108,8 +118,8 @@ class EditMyPlaceActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_edit_my_place, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -118,7 +128,12 @@ class EditMyPlaceActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         when (item.itemId) {
-            R.id.show_map_item -> Toast.makeText(this, "Show Map!", Toast.LENGTH_SHORT).show()
+            R.id.show_map_item -> {
+                var i = Intent(this, MyPlacesMapsActivity::class.java)
+                i.putExtra("state", MyPlacesMapsActivity.SELECT_COORDINATES)
+                Toast.makeText(this, "KOORDINATE", Toast.LENGTH_SHORT).show()
+                startActivity(i)
+            }
             R.id.my_places_list_item -> {
                 var intent = Intent(this, MyPlacesList::class.java)
                 startActivity(intent)
@@ -134,5 +149,24 @@ class EditMyPlaceActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        try {
+            if (resultCode == Activity.RESULT_OK) {
+                var lon = data?.extras?.getString("lon")
+                var lonText = findViewById<EditText>(R.id.editLongitude)
+                lonText.setText(lon)
+
+                var lat = data?.extras?.getString("lat")
+                var latText = findViewById<EditText>(R.id.editLatitude)
+                latText.setText(lat)
+            }
+        }
+        catch (e : Exception)
+        {
+
+        }
     }
 }

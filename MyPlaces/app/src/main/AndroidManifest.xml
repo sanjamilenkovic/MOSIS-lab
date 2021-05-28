@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="rs.elfak.mosis.observers.myplaces">
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -10,19 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPlaces">
         <activity
+            android:name=".activity.MyPlacesMapsActivity"
+            android:label="@string/title_activity_my_places_maps"
+            android:theme="@style/Theme.MyPlaces.NoActionBar"></activity>
+        <activity
             android:name=".activity.ViewMyPlaceActivity"
             android:label="@string/title_activity_view_my_place"
-            android:theme="@style/Theme.MyPlaces.NoActionBar"></activity>
+            android:theme="@style/Theme.MyPlaces.NoActionBar" />
         <activity
             android:name=".activity.EditMyPlaceActivity"
             android:label="@string/title_activity_edit_my_place"
             android:theme="@style/Theme.MyPlaces.NoActionBar" />
         <activity
-            android:name=".MyPlacesList"
+            android:name=".activity.MyPlacesList"
             android:label="@string/title_activity_my_places_list"
             android:theme="@style/Theme.MyPlaces.NoActionBar" />
         <activity
-            android:name=".About"
+            android:name=".activity.About"
             android:label="About"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
@@ -34,6 +44,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>

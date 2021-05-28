@@ -1,4 +1,4 @@
-package rs.elfak.mosis.observers.myplaces
+package rs.elfak.mosis.observers.myplaces.activity
 
 
 import android.content.Intent
@@ -11,9 +11,8 @@ import android.widget.ListView
 import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
+import rs.elfak.mosis.observers.myplaces.R
 import rs.elfak.mosis.observers.myplaces.activity.MainActivity.Companion.NEW_PLACE
-import rs.elfak.mosis.observers.myplaces.activity.EditMyPlaceActivity
-import rs.elfak.mosis.observers.myplaces.activity.ViewMyPlaceActivity
 import rs.elfak.mosis.observers.myplaces.data.MyPlace
 import rs.elfak.mosis.observers.myplaces.data.MyPlacesData
 
@@ -57,7 +56,7 @@ class MyPlacesList : AppCompatActivity() {
             menu.setHeaderTitle(place.name)
             menu.add(0, 1, 1, "View place")
             menu.add(0, 2, 2, "Edit place")
-
+            menu.add(0, 3, 3, "Delete place")
         }
 
     }
@@ -77,6 +76,9 @@ class MyPlacesList : AppCompatActivity() {
             i = Intent(this, EditMyPlaceActivity::class.java)
             i.putExtras(positionBundle)
             startActivityForResult(i, 1)
+        } else if (item.itemId == 3) {
+            MyPlacesData.getInstance().deletePlace(info.position)
+            setList()
         }
 
         return super.onContextItemSelected(item)
@@ -121,5 +123,11 @@ class MyPlacesList : AppCompatActivity() {
             MyPlacesData.getInstance().getMyPlaces()
         )
 
+    }
+
+    fun setList()
+    {
+        var myPlacesList : ListView = findViewById<ListView>(R.id.my_place_list)
+        myPlacesList.adapter = ArrayAdapter<MyPlace>(this, android.R.layout.simple_list_item_1, MyPlacesData.getInstance().getMyPlaces())
     }
 }

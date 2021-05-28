@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import rs.elfak.mosis.observers.myplaces.About
-import rs.elfak.mosis.observers.myplaces.MyPlacesList
 import rs.elfak.mosis.observers.myplaces.R
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }/////sasdasa
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -32,16 +31,22 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         when (item.itemId) {
-            R.id.show_map_item -> Toast.makeText(this, "Show Map!", Toast.LENGTH_SHORT).show()
+            R.id.show_map_item -> {
+                Toast.makeText(this, "Show Map!", Toast.LENGTH_SHORT).show()
+                var i = Intent(this, MyPlacesMapsActivity::class.java)
+                i.putExtra("state", MyPlacesMapsActivity.SHOW_MAP)
+                startActivity(i)
+            }
             R.id.my_places_list_item -> {
                 Toast.makeText(this, "My Places!", Toast.LENGTH_SHORT)
                     .show()
                 var intent = Intent(this, MyPlacesList::class.java)
                 startActivity(intent)
             }
-            R.id.new_place_item ->  {
+            R.id.new_place_item -> {
                 var intent = Intent(this, EditMyPlaceActivity::class.java)
-                startActivityForResult(intent,
+                startActivityForResult(
+                    intent,
                     NEW_PLACE
                 )
             }
@@ -61,6 +66,9 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK)
             Toast.makeText(this, "New Place added!", Toast.LENGTH_SHORT).show()
     }
-    companion object { var NEW_PLACE = 1 }
+
+    companion object {
+        var NEW_PLACE = 1
+    }
 }
 

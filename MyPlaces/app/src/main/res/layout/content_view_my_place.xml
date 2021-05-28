@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
+    
     <TextView
         android:id="@+id/nameText"
         android:layout_width="match_parent"
@@ -41,12 +42,46 @@
 
     </TextView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lat"
+        android:text="@string/latitude"
+        app:layout_constraintTop_toBottomOf="@id/descText"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/latText"
+        app:layout_constraintTop_toBottomOf="@id/lat"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lon"
+        android:text="@string/longitude"
+        app:layout_constraintTop_toBottomOf="@id/latText"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lonText"
+        app:layout_constraintTop_toBottomOf="@id/lon"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ok"
         android:id="@+id/button_ok"
-        app:layout_constraintTop_toBottomOf="@id/descText"
+        app:layout_constraintTop_toBottomOf="@id/lonText"
         app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
